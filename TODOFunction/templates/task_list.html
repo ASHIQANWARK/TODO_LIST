@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        li:hover {
+            background-color: #e9e9e9;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+
+        .actions {
+            float: right;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    <div class="container">
+        <h2>Task List</h2>
+        <a href="{% url 'task_create' %}">Create Task</a>
+        <ul>
+            {% for task in tasks %}
+                <li {% if task.completed %}class="completed"{% endif %}>
+                    <strong>{{ task.title }}</strong> - {{ task.description }}
+                    <div class="actions">
+                        {% if not task.completed %}
+                            <a href="{% url 'task_complete' task.id %}">Mark as completed</a>
+                        {% else %}
+                            <span>Completed</span>
+                        {% endif %}
+                        <a href="{% url 'task_update' task.id %}">Edit</a>
+                        <a href="{% url 'task_delete' task.id %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <footer>
+        &copy; 2024 Task Manager
+    </footer>
+</body>
+</html>
+
